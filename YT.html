@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayush Khalkar - YouTube Channel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- RESET & VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary-red: #FF0000;
+            --dark-red: #4A0000;
+            --bg-black: #0A0A0A;
+            --neon-glow: rgba(255, 0, 0, 0.6);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            background-color: var(--bg-black);
+            color: #FFFFFF;
+        }
+
+        /* --- PRELOADER --- */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-black);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 0, 0, 0.1);
+            border-top: 5px solid var(--primary-red);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 15px var(--neon-glow);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* --- BACKGROUND PARTICLES & GRADIENT --- */
+        .bg-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--bg-black) 40%, var(--dark-red) 100%);
+            animation: gradientMove 15s ease infinite alternate;
+            background-size: 200% 200%;
+            overflow: hidden;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 0, 0, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 10px var(--primary-red);
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(105vh) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-5vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* --- CONTAINER & NAVIGATION --- */
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        nav {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            margin-bottom: 30px;
+        }
+
+        .nav-logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-logo i {
+            color: var(--primary-red);
+            text-shadow: 0 0 10px var(--neon-glow);
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        /* --- MAIN HERO CONTENT --- */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .yt-main-logo {
+            font-size: 5rem;
+            color: var(--primary-red);
+            filter: drop-shadow(0 0 20px var(--neon-glow));
+            margin-bottom: 15px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px var(--neon-glow)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 35px rgba(255,0,0,0.9)); }
+        }
+
+        .title-glow {
+            font-size: 3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            background: linear-gradient(to right, #ffffff, #ffcccc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 5px;
+            margin-bottom: 35px;
+            letter-spacing: 1px;
+        }
+
+        /* --- CHANNEL CARD (GLASSMORPHISM) --- */
+        .channel-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            margin-bottom: 35px;
+            transform: perspective(1000px) rotateX(0deg);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .channel-card:hover {
+            transform: perspective(1000px) translateY(-5px);
+            box-shadow: 0 30px 50px rgba(255, 0, 0, 0.15), inset 0 1px 0 rgba(255,255,255,0.2);
+            border-color: rgba(255, 0, 0, 0.3);
+        }
+
+        .profile-container {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 15px auto;
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #222, #444);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 3px solid var(--primary-red);
+            box-shadow: 0 0 15px var(--neon-glow);
+            font-size: 2.2rem;
+            color: #fff;
+        }
+
+        .live-badge {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            background: var(--primary-red);
+            color: white;
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 8px var(--neon-glow);
+        }
+
+        .channel-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .channel-subs {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+        }
+
+        /* --- BUTTONS --- */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .btn {
+            position: relative;
+            width: 100%;
+            padding: 16px 32px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            overflow: hidden;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF0000 0%, #B30000 100%);
+            color: #FFFFFF;
+            border: none;
+            box-shadow: 0 10px 25px rgba(255, 0, 0, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 0, 0, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #FFFFFF;
+            border: 2px solid #FFFFFF;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary:hover {
+            background: #FFFFFF;
+            color: var(--bg-black);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Click/Active effect */
+        .btn:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        /* Ripples effect on click */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple-effect 0.6s linear;
+            background: rgba(255, 255, 255, 0.4);
+            pointer-events: none;
+        }
+        .btn-secondary .ripple {
+            background: rgba(255, 0, 0, 0.3);
+        }
+
+        @keyframes ripple-effect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.4);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 20px;
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (min-width: 480px) {
+            .btn-group {
+                flex-direction: row;
+            }
+            .btn {
+                flex: 1;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .title-glow {
+                font-size: 4rem;
+            }
+            .subtitle {
+                font-size: 1.75rem;
+            }
+            .yt-main-logo {
+                font-size: 6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="bg-wrapper" id="particle-container"></div>
+
+    <div class="app-container">
+        
+        <nav>
+            <div class="nav-logo">
+                <i class="fab fa-youtube"></i> Hub
+            </div>
+            <div class="nav-links">
+                <a href="https://www.youtube.com/channel/UCEA7c0kDBQD3Wt5Siww72VA" target="_blank" rel="noopener">Official Channel</a>
+            </div>
+        </nav>
+
+        <main>
+            <i class="fab fa-youtube yt-main-logo"></i>
+            <h1 class="title-glow">YouTube Channel</h1>
+            <p class="subtitle">Ayush Khalkar</p>
+
+            <div class="channel-card">
+                <div class="profile-container">
+                    <div class="profile-pic">
+                        <i class="fas fa-user-astronaut"></i>
+                    </div>
+                    <span class="live-badge">CREATOR</span>
+                </div>
+                <h2 class="channel-name">Ayush Khalkar</h2>
+                <p class="channel-subs">Subscribe for AI, Education & Technology</p>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" data-url="https://www.youtube.com/channel/UCEA7c0kDBQD3Wt5Siww72VA">
+                    <i class="fab fa-youtube"></i> Open YouTube
+                </button>
+                <button class="btn btn-secondary" data-url="https://www.youtube.com/channel/UCEA7c0kDBQD3Wt5Siww72VA">
+                    Subscribe Now
+                </button>
+            </div>
+        </main>
+
+        <footer>
+            &copy; 2026 Ayush Khalkar
+        </footer>
+    </div>
+
+    <script>
+        // --- PRELOADER CONTROLLER ---
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 500);
+        });
+
+        // --- DYNAMIC BACKGROUND PARTICLE ENGINE ---
+        function createParticles() {
+            const container = document.getElementById('particle-container');
+            const particleCount = window.innerWidth < 480 ? 15 : 35;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 6 + 4;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.left = `${Math.random() * 100}vw`;
+                
+                const duration = Math.random() * 8 + 7;
+                const delay = Math.random() * -15; 
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // --- NATIVE INTERACTION & BUTTON CLICK ANIMATION ---
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+
+                this.appendChild(ripple);
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+
+                const destinationUrl = this.getAttribute('data-url');
+                if (destinationUrl) {
+                    setTimeout(() => {
+                        window.open(destinationUrl, '_blank', 'noopener,noreferrer');
+                    }, 200);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
